@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>Thông tin chi tiết sản phẩm</h2>
+
+    <p>Id: <b th:text="${product.productId}"></b></p>
+    <p>Tên sản phẩm: <strong th:text="${product.productName}"></strong></p>
+    <p>Giá: <strong th:text="${product.price}"></strong></p>
+    <p>Mô tả: <strong th:text="${product.description}"></strong></p>
+
+    <form action="/add-to-cart" method="post">
+        <button type="submit" onclick="return alert('Thêm sản phẩm vào giỏ thành công!')">Thêm vào giỏ hàng</button>
+    </form>
+
+    <form action="/reviews" method="post" th:object="${review}">
+        <h2>Bình luận</h2>
+        <div>
+            <label for="rating">Số sao</label>
+            <input type="number" id="rating" min="1" max="5" th:field="*{rating}">
+        </div>
+        <div>
+            <label for="comment">Nhập bình luận</label>
+            <input type="text" id="comment" placeholder="Nhập bình luận" th:field="*{comment}">
+        </div>
+        <br>
+        <button type="submit">Gửi</button>
+    </form>
+    <br>
+    <table border="1" width="40%">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên</th>
+                <th>Số sao</th>
+                <th>Bình luận</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${#lists.isEmpty(reviews)}" style="text-align: center">
+                <td colspan="4">Chưa có bình luân nào!</td>
+            </tr>
+            <tr th:if="${!#lists.isEmpty(reviews)}" th:each="review, loop : ${reviews}" style="text-align: center">
+                <td th:text="${loop.index + 1}"></td>
+                <td th:text="${reviewService.findUsernameById(review.userId)}"></td>
+                <td th:text="${review.rating}"></td>
+                <td th:text="${review.comment}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

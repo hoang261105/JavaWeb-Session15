@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>Giỏ hàng của bạn</h2>
+
+    <table border="1" width="50%">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Tạm tính</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${#lists.isEmpty(carts)}" style="text-align: center">
+                <td colspan="3">Chưa có sản phẩm nào trong giỏ.</td>
+            </tr>
+
+            <tr style="text-align: center" th:each="cart, loop : ${carts}">
+                <td th:text="${loop.index + 1}"></td>
+                <td th:text="${cartService.getNameById(cart.productId)}"></td>
+                <td th:text="${cartService.getPriceById(cart.productId)}"></td>
+                <td th:text="${cart.quantity}"></td>
+                <td th:text="${cartService.getPriceById(cart.productId) * cart.quantity}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <p>Tổng tiền: <strong th:text="${totalPrice}"></strong> VNĐ</p>
+</body>
+</html>
