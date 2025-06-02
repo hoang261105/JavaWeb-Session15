@@ -17,5 +17,7 @@
     <a href="list-products">Bài 5</a>
     <br>
     <a href="login">Bài 6 + 7</a>
+    <br>
+    <a href="resumes">Bài 10</a>
 </body>
 </html>

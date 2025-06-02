@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Cập nhật CV</h2>
+
+<form th:action="@{/update-resume}" th:object="${resume}" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}">
+    <div>
+        <label for="fullName">Họ và tên</label>
+        <input type="text" id="fullName" placeholder="Nhập tên" th:field="*{fullName}">
+        <br>
+        <p th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" style="color: red"></p>
+    </div>
+    <div>
+        <label for="email">Email</label>
+        <input type="text" id="email" th:field="*{email}" placeholder="Nhập email">
+        <br>
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red"></p>
+    </div>
+    <div>
+        <label for="phone">Số điện thoại</label>
+        <input type="text" id="phone" placeholder="Nhập số điện thoại" th:field="*{phone}">
+        <br>
+        <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" style="color: red"></p>
+    </div>
+    <div>
+        <label for="education">Học vấn</label>
+        <input type="text" id="education" placeholder="Nhập học vấn" th:field="*{education}">
+        <br>
+        <p th:if="${#fields.hasErrors('education')}" th:errors="*{education}" style="color: red"></p>
+    </div>
+    <div>
+        <label for="experience">Kinh nghiệm</label>
+        <input type="text" id="experience" placeholder="Nhập kinh nghiệm" th:field="*{experience}">
+        <br>
+        <p th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}" style="color: red"></p>
+    </div>
+    <div>
+        <label for="skills">Kỹ năng</label>
+        <input type="text" id="skills" placeholder="Nhập kỹ năng" th:field="*{skills}">
+        <br>
+        <p th:if="${#fields.hasErrors('skills')}" th:errors="*{skills}" style="color: red"></p>
+    </div>
+    <div>
+        <label for="file">Hình ảnh</label>
+
+        <img th:src="${resume.image}" alt="" width="100" height="100">
+        <br>
+        <input type="file" id="file" th:field="${file}">
+        <br>
+        <p th:if="${#fields.hasErrors('file')}" th:errors="*{file}" style="color: red"></p>
+    </div>
+    <br>
+    <button type="submit">Cập nhật</button>
+</form>
+</body>
+</html>

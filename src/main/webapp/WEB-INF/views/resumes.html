@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>Danh sách CV</h2>
+
+    <a th:href="@{'add-resume'}">Thêm mới CV</a>
+
+    <table border="1" width="60%">
+        <thead>
+            <tr>
+              <th>STT</th>
+              <th>Hình ảnh</th>
+              <th>Tên</th>
+              <th>Email</th>
+              <th>Số điện thoại</th>
+              <th>Giáo dục</th>
+              <th>Kinh nghiệm</th>
+              <th>Kỹ năng</th>
+              <th>Chức năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${#lists.isEmpty(resumes)}" style="text-align: center">
+                <td colspan="9">Danh sách trống!</td>
+            </tr>
+
+            <tr th:each="resume, loop : ${resumes}" style="text-align: center">
+                <td th:text="${loop.index + 1}"></td>
+                <td>
+                    <img th:src="${resume.image}" alt="" width="100" height="100">
+                </td>
+                <td th:text="${resume.fullName}"></td>
+                <td th:text="${resume.email}"></td>
+                <td th:text="${resume.phone}"></td>
+                <td th:text="${resume.education}"></td>
+                <td th:text="${resume.experience}"></td>
+                <td th:text="${resume.skills}"></td>
+                <td>
+                    <form th:action="@{'edit/' + ${resume.id}}" method="get">
+                        <button type="submit">Sửa</button>
+                    </form>
+                    <form th:action="@{'delete/' + ${resume.id}}" method="post">
+                        <button type="submit" onclick="return confirm('Bạn có chắc chắn xóa CV này?')">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

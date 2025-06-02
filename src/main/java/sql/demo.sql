@@ -36,6 +36,17 @@ create table carts(
     quantity int default 1
 );
 
+create table resumes(
+    id int primary key auto_increment,
+    full_name varchar(255) not null,
+    email varchar(255) not null unique,
+    phone_number varchar(10) not null unique,
+    education varchar(200) not null,
+    experience varchar(200) not null,
+    skills varchar(100) not null,
+    image text
+);
+
 insert into users(name, email, password)
 values ('Hoàng', 'hoang@gmail.com', 'hoang123'),
        ('Phương Anh', 'phanh@gmail.com', 'phanh123');
@@ -160,5 +171,87 @@ begin
     from products p
     join carts c on p.product_id = c.product_id
     where p.product_id = product_id_in;
+end;
+DELIMITER \\
+
+-- Hiển thị
+DELIMITER \\
+create procedure get_all_resumes()
+begin
+    select * from resumes;
+end;
+
+create procedure add_resume(
+    full_name_in varchar(255),
+    email_in varchar(255),
+    phone_number_in varchar(10),
+    education_in varchar(200),
+    experience_in varchar(200),
+    skills_in varchar(100),
+    image_in text
+)
+begin
+    insert into resumes(full_name, email, phone_number, education, experience, skills, image)
+    values (full_name_in, email_in, phone_number_in, education_in, experience_in, skills_in, image_in);
+end;
+
+create procedure check_exist_email(
+    email_in varchar(200),
+    id_in int
+)
+begin
+    select count(*) as is_exist_name
+    from resumes
+    where email = email_in
+    and (id_in is null or id != id_in);
+end;
+
+create procedure check_exist_phone(
+    phone_in varchar(200),
+    id_in int
+)
+begin
+    select count(*) > 0 as is_exist_phone
+    from resumes
+    where phone_number = phone_in
+    and (id_in is null or id != id_in);
+end;
+
+create procedure find_resume_by_id(
+    id_in int
+)
+begin
+    select * from resumes
+    where id = id_in;
+end;
+
+create procedure update_resume(
+    id_in int,
+    full_name_in varchar(255),
+    email_in varchar(255),
+    phone_number_in varchar(10),
+    education_in varchar(200),
+    experience_in varchar(200),
+    skills_in varchar(100),
+    image_in text
+)
+begin
+    update resumes
+    set full_name = full_name_in,
+        email = email_in,
+        phone_number = phone_number_in,
+        education = education_in,
+        experience = experience_in,
+        skills = skills_in,
+        image = image_in
+    where id = id_in;
+end;
+
+create procedure delete_resume(
+    id_in int
+)
+begin
+    delete from resumes
+    where id = id_in;
 end;
 DELIMITER \\
